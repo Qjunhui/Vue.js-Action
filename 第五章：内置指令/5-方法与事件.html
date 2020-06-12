@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Vue</title>
+        <script src="../vue.min.js"></script>
+    </head>
+    <body>
+        <div id="app1">
+            点击次数：{{ counter }}
+            <button @click="handleAdd()">+1</button>
+            <button @click="handleAdd(10)">+10</button>
+        </div>
+
+        <div id="app2">
+            <a href="http://www.apple.com" @click="handleClick('禁止打开',event)">apple官网</a>
+        </div>
+
+        <!-- 阻止单击事件冒泡 -->
+        <a @click.stop="handle"></a>
+        <!-- 提交事件不再重载页面  -->
+        <form @submit.prevent="handle"></form>
+        <!-- 修饰符可以串联 -->
+        <a @click.stop.prevent="handle"></a>
+        <!-- 只有修饰符  -->
+        <form @submit.prevent></form>
+        <!-- 添加事件侦听器时使用事件捕获模式 -->
+        <div @click.capture="handle"></div>
+        <!-- 只当事件在该元素本身（而不是子元素）触发时触发回调 -->
+        <div @click.self="handle"></div>
+        <!-- 只触发一次 -->
+        <div @click.once="handle"></div>
+        <!-- keyCode为13时调用vm.submit() -->
+        <input @keyup.13="submit">
+
+        <script>
+            var app1 = new Vue({
+                el : "#app1",
+                data : {
+                    counter : 0
+                },
+                methods : {
+                    handleAdd : function(count) {
+                        // @click调用的方法名可不跟（）
+                        // 如果该方法有参数，默认会将原生对象event传入
+                        // console.log(count);   //MouseEvent
+                        count = count || 1;
+                        this.counter += count;
+                    }
+                }
+            })
+
+            var app2 = new Vue({
+                el : "#app2",
+                methods : {
+                    handleClick : function(message,event) {
+                        event.preventDefault();
+                        window.alert(message);
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>

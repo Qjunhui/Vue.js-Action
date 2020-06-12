@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>v-for</title>
+        <script src="../vue.min.js"></script>
+    </head>
+    <body>
+        <div id="app1">
+            <ul>
+                <template v-for="book in books">
+                    <li>书名：{{ book.name }}</li>
+                    <li>作者：{{ book.author }}</li>
+                </template>
+            </ul>
+        </div>
+
+        <div id="app2">
+            <p v-for="value in user">{{ value }}</p>
+        </div>
+
+        <div id="app3">
+            <ul>
+                <li v-for="(value,key,index) in user">
+                    {{ index }} - {{ key }} : {{ value}}
+                </li>
+            </ul>
+        </div>
+
+        <div id="app4">
+            <span v-for="n in 10">{{ n }} </span>
+        </div>
+        <script>
+            var app1 = new Vue({
+                el : "#app1",
+                data : {
+                    books : [
+                        {
+                            name : '<<Vue.js实战>>',
+                            author : '梁灏'
+                        },
+                        {
+                            name : '<<Vue.js实战>>',
+                            author : '梁灏1'
+                        },
+                        {
+                            name : '<<Vue.js实战>>',
+                            author : '梁灏2'
+                        }
+                    ]
+                }
+
+            })
+
+            var app2 = new Vue({
+                el : "#app2",
+                data : {
+                    user : {
+                        name : "Aresn",
+                        gender : "boy",
+                        age : 26
+                    }
+                }
+            })
+
+            var app3 = new Vue({
+                el : "#app3",
+                data : {
+                    user : {
+                        name : "Aresn",
+                        gender : "boy",
+                        age : 26
+                    }
+                }
+            })
+
+            // 迭代整数
+            var app4 = new Vue({
+                el : "#app4"
+            })
+        </script>
+    </body>
+</html>

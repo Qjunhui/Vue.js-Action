@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>页内查找相关内容</title>
+<style>
+	span { 
+        background:yellow; 
+    }
+</style>
+<script>
+    window.onload=function(){
+        var inp=document.getElementsByTagName("input");
+        var oP=document.getElementById("box");
+ 
+        inp[1].onclick=function(){
+            oP.innerHTML = oP.innerHTML.replace(/<.*?>/ig,"");
+            var str = inp[0].value;
+            if (!str)return; //若内容不存在即返回
+            oP.innerHTML=oP.innerHTML.split(str).join('<span>'+str+'</span>')
+        }
+    };
+</script>
+</head>
+ 
+<body>
+ 
+<input type="text" />
+<input type="button" value="查找" />
+<p id="box">
+    轻轻的我走了，正如我轻轻的来；我轻轻的招手，作别西天的云彩。<br/>
+    那河畔的金柳，是夕阳中的新娘；波光里的艳影，在我的心头荡漾。<br/>
+    软泥上的青荇，油油的在水底招摇；在康河的柔波里，我甘心做一条水草！ <br/>
+    那榆荫下的一潭，不是清泉，是天上虹；揉碎在浮藻间，沉淀着彩虹似的梦。<br/>
+    寻梦？撑一支长篙，向青草更青处漫溯；满载一船星辉，在星辉斑斓里放歌。<br/>
+    但我不能放歌，悄悄是别离的笙箫；夏虫也为我沉默，沉默是今晚的康桥！<br/>
+    悄悄的我走了，正如我悄悄的来；我挥一挥衣袖，不带走一片云彩
+</p>
+	
+</body>
+</html>
+
+
+                  window.onload                           $(document).ready()
+执行时机     必须等待页面全部加载完毕（包括图片等），        只需要等待网页中等DOM结构加载完毕，
+            然后再执行包裹代码                          就能执行包裹等代码
+执行次数     只能执行一次，如果第二次，那么第一次的          可以执行多次，第N次都不会被上一次
+            执行会被覆盖                                覆盖
+简写方案      无                                        $(function() {})

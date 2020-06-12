@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Vue-当前日期</title>
+        <script src="../vue.min.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            {{ date }}
+        </div>
+        <script>
+            new Vue({
+                el : "#app",
+                data : {
+                    date : new Date()
+                },
+                mounted : function() {
+                    var _this = this; //声明一个变量指向Vue实例
+                    this.timer = setInterval(function() {
+                        _this.date = new Date();
+                    },1000)
+                },
+                //实例销毁前调用，主要是解绑一些使用addEventListener监听的事件
+                beforeDestory : function() {
+                    if(this.timer) {
+                        clearInterval(this.timer);
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>

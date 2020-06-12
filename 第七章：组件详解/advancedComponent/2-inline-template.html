@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>组件高级用法——内联模板</title>
+        <link rel="shortcut icon" href="../../q.png" type="image/x-icon">  
+        <script src="../../vue.min.js"></script>
+    </head>
+    <body>
+        <!-- 组件的模板一般都是在template选项内定义的，Vue提供了一个内联模板的功能，在使用组件时，给组件标签使用 inline-tmplate特性，组件就会把它的内容当作模板，而不是把它当内容分发，这让模板更灵活。 -->
+        <div id="app">
+            <child-component inline-template>
+                <div>
+                    <h2>在父组件中定义子组件的模板</h2>
+                    <p>{{ meaasge }}</p>
+                    <p>{{ msg }}</p>
+                </div>
+            </child-component>
+        </div>
+        <script>
+            Vue.component("child-component",{
+                data : function() {
+                    return {
+                        msg : '在子组件声明的数据'
+                    }
+                }
+            })
+    
+            var app = new Vue({
+                el : "#app",
+                data : {
+                    meaasge : "在父组件声明的数据"
+                }
+            })
+
+            // 在父组件中声明的数据 message 和子组件中声明的数据 msg 两个都可以渲染（如果同名，优先使用子组件的数据）。这反而是内联模板的缺点，就是作用域比较难理解，如果不是非常特殊的场景 建议不要轻易使用内联模板。
+        </script>
+    </body>
+</html>

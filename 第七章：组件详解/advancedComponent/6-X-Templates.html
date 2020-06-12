@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>X-Templates</title>
+    <link rel="shortcut icon" href="../../q.png" type="image/x-icon">  
+    <script src="../../vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <my-component></my-component>
+        <script type="text/x-template" id="my-component">
+            <!-- 只能一个大的div -->
+            <div>
+                <div>这是组件的内容1</div>
+                <div>这是组件的内容2</div>
+                <div>这是组件的内容3</div>
+            </div>
+        </script>
+    </div>
+
+    <script>
+        Vue.component('my-component',{
+            template : '#my-component'
+        });
+
+        var app = new Vue({
+            el : "#app"
+        })
+    </script>
+</body>
+</html>

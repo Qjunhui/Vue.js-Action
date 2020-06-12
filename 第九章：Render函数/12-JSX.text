@@ -1,0 +1,34 @@
+1.template模板
+
+<anchor :level="1">
+    <span>一级</span>标题
+</anchor> 
+
+————————————————————————————————————————————————————————————
+
+2.createElement模板
+
+return createElement('anchor',{
+    props : {
+        level : 1
+    }
+},[
+    createElement('span','一级'),
+    '标题'
+]) 
+
+ ————————————————————————————————————————————————————————————   
+
+3.JSX模板
+
+需要在webpack里面配置插件 babel-plugin-transform-vue-jsx 编译后才可以
+new Vue({
+    el : "#app",
+    render (h) {
+        return {
+        <anchor level={1}>
+            <span>一级</span>标题
+        </anchor>  
+        }
+    }
+}) 

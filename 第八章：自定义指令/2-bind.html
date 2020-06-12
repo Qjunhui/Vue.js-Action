@@ -1,0 +1,73 @@
+<!-- 每个钩子函数都有几个参数可用 
+
+    • el 指令所绑定的元素，可以用来直接操作 DOM
+    • binding 一个对象，包含以下属性：
+        > name 指令名，不包括v-前缀。
+        > value 指令的绑定值，例如 v-my-directive＝"1+1"， value 的值是2
+        > oldValue 指令绑定的前一个值,仅在 update 和 componentUpdated 钩子中可用．无论值是否改变都可用    
+        > expression 绑定值的字符串形式，例如 v-my-directive="1+1"， expression 的值是"1+1". 
+        > arg 传给指令的参数。例如 v-my-directive:foo, arg 的值是 foo
+        > modifiers 一个包含修饰符的对象 例如 v-my-directive.foo.bar ，修饰符对象 modifiers的值是｛ foo: true, bar: true ｝。
+    • vnode Vue 编译生成的虚拟节点，在进阶篇中介绍
+    • oldVnode 上一个虚拟节点仅在 update 和 componentUpdated 钩子中可用
+-->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../vue.min.js"></script>
+</head>
+<body>
+    <div id="app1">
+        <div v-test:msg.a.b="message"></div>
+    </div>
+
+    <div id="app2">
+        <div v-test="{msg : 'hello', name : 'Aresn'}"></div>
+    </div>
+</body>
+<script>
+    Vue.directive('test',{
+        bind : function(el,binding,vnode) {
+            var keys = [];
+            for(var i in vnode) {
+                keys.push(i);
+            }
+            el.innerHTML = 
+                'name : ' + binding.name + '<br>' + 
+                'value : ' + binding.value + '<br>' + 
+                'expression : ' + binding.expression + '<br>' +  
+                'argment : ' + binding.arg + '<br>' + 
+                'modifiers : ' + JSON.stringify(binding.modifiers) + '<br>' + 
+                'vnode keys : ' +  keys.join(', ')
+        }
+    })
+
+    var app1 = new Vue({
+        el : "#app1",
+        data : {
+            message : 'some text'
+        }
+    })
+
+
+
+    Vue.directive('test',{
+        bind : function(el,binding,vnode) {
+            el.innerHTML = 
+                'msg : ' + binding.value.msg + '<br>' +
+                'name : ' + binding.value.name
+        }
+    })
+
+    var app2 = new Vue({
+        el : "#app2"
+    })
+</script>
+</html>

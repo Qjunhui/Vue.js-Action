@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Vue</title>
+        <script src="../vue.min.js"></script>
+    </head>
+    <body>
+        <div id="app1">
+            {{ reversedText }}
+        </div>
+        <div id="app2">
+            {{ reversedText2() }}
+        </div>
+        <script>
+            var app1 = new Vue({
+                el : "#app1",
+                data : {
+                    text : "123,456"
+                },
+                // 计算属性都以函数的形式写在Vue实例的computed，最终返回计算后的结果
+                computed : {
+                    reversedText : function() {
+                        return this.text.split(",").reverse().join(",");
+                    }
+                }
+            })
+
+// 计算属性是基于它的依赖缓存的。一个计算属性所依赖的数据发生变化时，它才会重新取值。
+// methods只要重新渲染，它就会被调用，因此函数也会被执行。
+
+            var app2 = new Vue({
+                el : "#app2",
+                data : {
+                    text : "123,456"
+                },
+                methods : {
+                    reversedText2 : function() {
+                        return this.text.split(",").reverse().join(",");
+                    } 
+                }
+            })
+        </script>
+    </body>
+</html>

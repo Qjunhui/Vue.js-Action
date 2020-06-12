@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>nextTick</title>
+    <link rel="shortcut icon" href="../../q.png" type="image/x-icon">  
+    <script src="../../vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div id="div" v-if="showDiv">这是一段文本</div>
+        <button @click="getText1">获取div内容1</button>
+        <button @click="getText2">获取div内容2</button>
+    </div>
+
+    <script>
+        var app = new Vue({
+            el : "#app",
+            data : {
+                showDiv : false
+            },
+            methods : {
+                // 这里就涉及 Vue 一个重要的概念：异步更新队列。
+                // Vue在观察到数据变化时并不是直接更新 DOM，而是开启 一个队列，并缓冲在同一事件循环中发生的所有数据改变。在缓冲时会去除重复数据，从而避免不必要的计算和 DOM 操作。然后，在下一个事件循环 tick 中， Vue 刷新队列井执行实际（己去重的）工作。所以如果你用一个 for环来动态改变数据 100•次，其实它只会应用最后一次改变，如果没有这种机制， DOM 就要重绘 100次，这固然是一个很大的开销。
+
+                //Vue 会根据当前浏览器环境优先使用原生的 Promise en MutationObserver ，如果都不支持，就会采用 setTimeout代替。
+                getText1 : function() {
+                    this.showDiv = true;
+                    var text1 = document.getElementById("div").innerHTML;
+                    console.log(text1);// Cannot read property 'innerHTML' of null
+                },
+                getText2 : function() {
+                    this.showDiv = true;
+                    this.$nextTick(function() {
+                        var text2 = document.getElementById("div").innerHTML;
+                        console.log(text2);
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+</html>

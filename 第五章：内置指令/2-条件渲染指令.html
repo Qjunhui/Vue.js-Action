@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>v-if</title>
+        <script src="../vue.min.js"></script>
+    </head>
+    <body>
+<!-- template的作用是模板占位符，可帮助我们包裹元素，但在循环过程当中，template不会被渲染到页面上 -->
+        <div id="app">
+            <template v-if="type==='name'">
+                <label>用户名：</label>
+                <input type="text" placeholder="请输入用户名" key="name-input">
+            </template>
+            <template v-else>
+                <label>邮箱：</label>
+                <input type="text" placeholder="请输入邮箱" key="mail-input">
+            </template>
+            <button @click="handleToggleClick">切换输入类型</button>
+        </div>
+        <script>
+            // input加入key后，就不会复用了，切换类型时输入的内容也会被删除
+            var app = new Vue({
+                el : "#app",
+                data : {
+                    type : "name"
+                },
+                methods : {
+                    handleToggleClick : function() {
+                        this.type = this.type==="name"?"mail":"name";
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>

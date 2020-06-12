@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>组件高级用法——异步组件</title>
+        <link rel="shortcut icon" href="../../q.png" type="image/x-icon">  
+        <script src="../../vue.min.js"></script>
+    </head>
+    <body>
+        <!-- Vue.js允许将组件定义为一个工厂函数，动态地解析组件。Vue.js只在组件需要渲染时触发工厂函数 并且把结果缓存起来，用于后面的再次渲染。 -->
+        <div id="app">
+            <child-component></child-component>
+        </div>
+        <script>
+            Vue.component("child-component",function(resolve,reject){
+                window.setTimeout(function() {
+                    resolve({
+                        template : "<div>我是异步渲染的</div>"
+                    });
+                },2000);
+            })
+            
+            var app = new Vue({
+                el : "#app"
+            })
+        </script>
+    </body>
+</html>

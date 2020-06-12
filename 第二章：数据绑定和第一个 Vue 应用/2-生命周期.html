@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Vue</title>
+        <script src="../vue.min.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <input type="text" v-model="name" placeholder="请输入你的名字">
+            <h1>您好,{{ name }}</h1>
+        </div>
+        <script>
+            new Vue({
+                el : "#app",
+                data : {
+                    name : "钱俊慧"
+                },
+                //尚未挂载，$el不可用
+                created : function() {
+                    console.log(this.name);//钱俊慧
+                    console.log(this.$el);// undefined
+                },
+                mounted : function() {
+                    console.log(this.$el);// <div id="app">...</div>
+                }
+            })
+        </script>
+    </body>
+</html>

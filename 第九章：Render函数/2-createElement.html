@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Virtual Dom</title>
+    <link rel="shortcut icon" href="./../q.png" type="image/x-icon">
+</head>
+
+<body>
+    <div id="app">
+        <ele></ele>
+    </div>
+
+    <script src="../vue.min.js"></script>
+    <script>
+    // createElement构成了Vue Virtual Dom的模板，它有3个参数：
+    //     --第一个参数必选，可以是一个HTML标签，也可以是一个组件或函数；
+    //     --第二个是可选参数，数据对象，在template中使用；
+    //     --第三个是子节点，也是可选参数，用法一致。 
+    
+        Vue.component('ele',{
+            render : function(createElement) {
+                return createElement (
+                    'div',
+                    {
+                        class : {
+                            'show' : this.show
+                        },
+                        attrs : {
+                            id : 'element'
+                        },
+                        on : {
+                            click : this.handleClick
+                        }
+                    },
+                    // '文本内容',
+                    [
+                        createElement(
+                            'p',
+                            {
+                                style : {
+                                    color : 'pink',
+                                    fontSize : '14px'
+                                }
+                            },
+                            'p标签'
+                        )
+                    ]
+                )
+            },
+            data : function() {
+                return {
+                    show : true
+                }
+            },
+            methods : {
+                handleClick : function() {
+                    console.log('clicked!!!!');
+                }
+            }
+        })
+
+        var app = new Vue({
+            el : "#app"
+        })
+    </script>
+</body>
+
+</html>
+

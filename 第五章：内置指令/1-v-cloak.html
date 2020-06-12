@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>内置指令</title>
+        <script src="../vue.min.js"></script>
+    </head>
+    <style>
+        [v-cloak]{
+            display: none;
+        }
+    </style>
+    <body>
+        <div id="app1" v-cloak>
+            {{ message }}
+        </div>
+
+        <!-- 使用display：none 加载前会导致 内部第二个div在第一个div的位置 -->
+        <!-- visibility: hidden !important; -->
+        <div id="ctr-01" >
+            <div v-cloak style="background-color: antiquewhite;">++++{{first}}-----</div>
+            <div style="height: 20px;width:20px;border-radius: 50%;background-color: red;"></div>
+        </div>
+        <script>
+            // 这时虽然己经加了指令 v-cloak，但其实并没有起到任何作用，当网速较慢、 Vue.js 文件还没加载完时，在页面上会显示{ { message }}的字样，直到 Vue 创建实例、编译模板时， 替换，所以这个过程屏幕是有闪动的。只要加一句 css就可以解决这个问题了:[v-cloak] { display: none;} 
+            var app1 = new Vue({
+                el : "#app1",
+                data : {
+                    message : "这是一段文本"
+                }
+            })
+        </script>
+    </body>
+</html>

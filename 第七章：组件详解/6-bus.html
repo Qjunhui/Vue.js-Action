@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>组件间通信-中央事件总线bus</title>
+        <script src="../vue.min.js"></script>
+    </head>
+    <body>
+        <!-- !!! Vue 1.x,Vue 2.x 都适用  -->
+        <div id="app">
+            {{ message }} 
+            <my-component></my-component> 
+        </div>
+        <script>
+            var bus = new Vue();
+
+            Vue.component("my-component",{
+                template : '<button @click="handleEvent">传递事件</button>',
+                methods : {
+                    handleEvent : function() {
+                        bus.$emit("on-message","来自内部组件'my-component'的数据");
+                    }
+                }
+            })
+
+            var app = new Vue({
+                el : "#app",
+                data : {
+                    message : ""
+                },
+                mounted : function() {
+                    var _this  = this;
+                    // 监听来自bus实例的事件
+                    bus.$on('on-message',function(msg) {
+                        _this.message = msg;
+                    })
+                }
+            })
+        </script>
+    </body>
+</html>

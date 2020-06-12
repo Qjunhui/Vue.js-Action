@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>重复使用组件</title>
+    <link rel="shortcut icon" href="./../q.png" type="image/x-icon">
+</head>
+
+<body>
+    <!-- 所有的组件树中，如果VNode是组件或含有组件的slot，那么VNode必须唯一。 -->
+    <div id="app">
+        <ele></ele>
+    </div>
+
+    <script src="../vue.min.js"></script>
+    <script>
+        // 局部声明组件
+        var Child = { 
+            render : function(createElement) {
+                return createElement('p','text');
+            }
+        };
+
+        Vue.component('ele',{
+            render :  function(createElement) {
+                return createElement(
+                    'div',
+                    Array.apply(null,{
+                        length : 5
+                    }).map(function() {
+                        return createElement(Child);
+                    })
+                );
+            }
+        });
+
+        var app = new Vue({
+            el : "#app"
+        })
+    </script>
+</body>
+
+</html>

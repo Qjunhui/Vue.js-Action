@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>手动挂载实例</title>
+    <link rel="shortcut icon" href="../../q.png" type="image/x-icon">  
+    <script src="../../vue.min.js"></script>
+</head>
+<body>
+    <div id="mount-div">
+
+    </div>
+
+    <script>
+        // Vue.extend 基础 Vue 构造器，创建 个“子类”，参数是 个包含组件选项的对象。
+
+        //如果 Vue 实例在实例化时没有收到 el 选项，它就处于“未挂载”状态，没有关联的 DOM素。可以使用$mount（）手动地挂载 个未挂载的实例。这个方法返回实例自身，因而可以链式调用其他实例方法。
+        var myComponent = Vue.extend({
+            template : "<div>Hello : {{ name }}</div>",
+            data : function() {
+                return {
+                    name : "Aresn"
+                }
+            }
+        });
+
+        // 写法1
+        // new myComponent().$mount("#mount-div");
+
+        // 写法2
+        // new myComponent({
+        //     el : "#mount-div"
+        // })
+
+        // 写法3:在文档之外渲染并且随后挂载
+        var component = new myComponent().$mount();
+        document.getElementById("mount-div").appendChild(component.$el);
+    </script>
+</body>
+</html>

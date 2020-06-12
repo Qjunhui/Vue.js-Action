@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>component</title>
+        <script src="../vue.min.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <my-component1></my-component1>
+            <my-component1></my-component1>
+            <my-component1></my-component1>
+
+            <br>
+
+            <my-component2></my-component2>
+            <my-component2></my-component2>
+            <my-component2></my-component2>
+        </div>
+
+        <script>
+            // JavaScript对象是引用关系,所以如果return出的对象引用了外部的一个对象，那这个对象就是共享的，任何一方修改都会同步
+            var data = {
+                counter : 0
+            };
+            //点击任意一个<button>,3个的数字都会加1，那是因为组件的data引用的是外部对象
+            Vue.component('my-component1',{
+                template : '<button @click="counter++">{{ counter }}</button>',
+                data : function() {
+                    return data;
+                }
+            })
+
+            // ！！！可复用
+            Vue.component('my-component2',{
+                template : '<button @click="counter++">{{ counter }}</button>',
+                data : function() {
+                    return {
+                        counter : 0
+                    }
+                }
+            })
+            var app = new Vue({
+                el : "#app"
+            })
+        </script>
+    </body>
+</html>

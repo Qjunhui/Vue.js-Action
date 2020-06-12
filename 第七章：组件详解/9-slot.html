@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>内容分发</title>
+        <script src="../vue.min.js"></script>
+    </head>
+    <body>
+        <!-- 当需要让组件组合使用，混合父组件的内容与子组件的模板时，就会用到slot 这个过程叫作内容分发（ transclusion ）。
+        以＜app＞为例，它有两个特点
+            1.<app＞组件不知道它的挂载点会有什么内容。挂载点的内容是由＜app＞的父组件决定
+            2.<app＞组件很可能有它自己的模板。 -->
+
+        <!-- props传递数据、eventsc触发事件和slot内容分发就构成了Vue组件的3个API来源，再复杂的组件也是由这3部分构成的。 -->
+
+        <!-- slot 分发的内容，作用域是在父组件上的。 -->
+
+        <!-- ———————————————————————————————————————————————————————————————————————————————————————————————————— -->
+        
+        <!-- 
+            用法1:单个slot
+            在子组件内使用特殊的＜slot>元素就可以为这个子组件开启一个slot（插槽），在父组件模板里，插入在子组件标签内的所有内容将替代子组件的＜ lot> 标签及它的内容。
+        -->
+        <div id="app1">
+            <child-component1>
+                <!-- <p>分发的内容</p>
+                <p>分发的内容。。。</p> -->
+            </child-component1>
+        </div>
+        <script>
+            // 注意，子组件＜slot> 内的备用内容，它的作用域是子组件本身．
+            Vue.component("child-component1",{
+                template : '<div><slot><p>如果父组件没有插入内容，就显示</p></slot></div>'
+            })
+    
+            var app1 = new Vue({
+                el : "#app1"
+            })
+        </script>
+
+
+        <!-- 
+            用法2:具名slot
+            给＜slot>元素指定一个 name 后可以分发多个内容，具名slot 可以与单个 slot 共存
+         -->
+         <div id="app2">
+            <child-component2> 
+                <h2 slot="header">标题</h2>
+                <p>正文内容</p>
+                <p>更多的正文内容</p>
+                <div slot="footer">底部信息</div>
+            </child-component2> 
+        </div>
+        <script>
+            Vue.component("child-component2",{
+                template : '<div class="container"><div class="header"><slot name="header"></slot></div><div class=”main”><slot></slot></div><div class="footer"><slot name="footer"></ slot></div></div>'
+            })
+
+            var app2 = new Vue({
+                el : "#app2"
+            })
+            // 子组件内声明了3个＜slot>元素，其中在＜div class＝"main">与内的＜slot>没有使用name特性，它将作为默认slot出现，父组件没有使用slot特性的元素与内容都将出现在这里。
+            // 如果没有指定默认的匿名slot ，父组件内多余的内容片段都将被抛弃。
+        </script>
+
+
+
+        <!-- 
+            用法3:作用域插槽 
+            作用域插槽是1种特殊的 slot ，使用1个可以复用的模板替换己渲染元素。
+        -->
+        <div id="app3">
+            <child-component3>
+                <template scope="props">
+                    <p>来自父组件的内容</p>
+                    <p>{{ props.msg }}</p>
+                </template>
+            </child-component3>
+        </div>
+        <script>
+            Vue.component("child-component3",{
+                template : '<div class="container"><slot msg="来自子组件的内容"></slot></div>'
+            })
+
+            var app3 = new Vue({
+                el : "#app3"
+            })
+        </script>
+    </body>
+</html>

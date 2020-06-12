@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>组件间通信-子组件索引</title>
+        <script src="../vue.min.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <button @click="handleRef">通过ref获取子组件实例</button>
+            <my-component ref="comA"></my-component> 
+        </div>
+
+        <div id="demo">
+            <p ref="p">内容</p>
+            <child-component ref="child"></child-component>
+        </div>
+        <script>
+            Vue.component("my-component",{
+                template : '<div>子组件</div>',
+                data : function() {
+                    return {
+                        message : "子组件内容"
+                    }
+                }
+            })
+
+            var app = new Vue({
+                el : "#app",
+                methods : {
+                    handleRef : function() {
+                        // 通过$refs 来访问指定的实例
+                        var msg = this.$refs.comA.message; 
+                        console .log (msg);//子组件内容
+                    }
+                }
+            })
+
+//-----------------------------------------------------------------------------------
+
+            Vue.component("child-component",{
+                template : '<button>子组件</button>'
+            })
+
+            var demo = new Vue({
+                el : "#demo"
+            })
+            console.log(demo.$refs.p);
+            console.log(demo.$refs.child);
+        </script>
+         <!-- $refs只在组件渲染完成后才填元，并且它是非响应式的 它仅仅作为一个直接访问子组件的应急方案，应当避免在模板或计算属性中使用$refs -->
+    </body>
+</html>

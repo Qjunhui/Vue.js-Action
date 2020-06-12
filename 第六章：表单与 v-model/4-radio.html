@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>单选框</title>
+        <script src="../vue.min.js"></script>
+    </head>
+    <body>
+        <div id="app1">
+            <!-- 单选按钮在单独使用时，不需要 v-model ，直接使用 v-bind 绑定一个布尔类型：为真选中，为否时不选， -->
+            <input type="radio" :checked="picked">
+            <label>单选按钮</label>
+            
+            <hr>
+
+            <input type="radio" v-model="radioChecked" value="html">
+            <label for="html">HTML</label>
+            <br>
+            <input type="radio" v-model="radioChecked" value="css" >
+            <label for="css">CSS</label>
+            <br>
+            <input type="radio" v-model="radioChecked" value="js">
+            <label for="js">JavaScript</label>
+            <br>
+            <p>选中的是：{{ radioChecked }}</p>
+        </div>
+
+        <div id="app2">
+            <input type="radio" v-model="picked" :value="value">
+            <label for="html">单选按钮</label>
+            <br>
+            <p>{{ picked }}</p>
+            <p>{{ value }}</p>
+        </div>
+        <script>
+            var app1 = new Vue({
+                el : "#app1",
+                data : {
+                    picked : true,
+                    radioChecked : "js"
+                }
+            })
+
+            // 在选中 时， app.picked === app value 111
+            var app2 = new Vue({
+                el : "#app2",
+                data : {
+                    picked : false,
+                    value : "111"
+                }
+            })
+        </script>
+    </body>
+</html>

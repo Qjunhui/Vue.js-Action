@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>非父子组件通信Vue.js 1.x</title>
+        <script src="../vue.min.js"></script>
+    </head>
+    <body>
+        <!-- 注意：该示例需使用Vue.js 1.x的版本 -->
+
+        <!-- $dispatch()用于向上级派发事件，只要是它的父级（一级或多级以上〉，都可以在Vue实例的events选项内接收 -->
+        <!-- $broadcast()是由上级向下级广播事件的 -->
+        <!-- 这两种方法一旦发出事件后，任何组件都是可以接收到的，就近原则 而且会在第1次接收到后停止冒泡，除非返回 true -->
+        <div id="app">
+            {{ message }} 
+            <my-component></my-component> 
+        </div>
+        <script>
+            Vue.component("my-component",{
+                template : '<button @click="handleDispatch">派发事件</button>',
+                methods : {
+                    handleDispatch : function() {
+                        this.$dispatch("on-message","来自内部组件的数据");
+                    }
+                }
+            })
+
+            var app = new Vue({
+                el : "#app",
+                data : {
+                    message : ""
+                },
+                events : {
+                    'on-message' : function(msg) {
+                        this.message = msg;
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
